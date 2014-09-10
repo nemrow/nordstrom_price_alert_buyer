@@ -1,0 +1,3 @@
+class Nordstrom::Checkout
+
+end
