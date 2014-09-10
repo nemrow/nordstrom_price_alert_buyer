@@ -15,9 +15,7 @@ describe Nordstrom::SignIn do
   end
 
   it "logs the user in" do
-    @browser.screenshot.save("test_1.png")
     Nordstrom::SignIn.new(@user, @browser).run
-    @browser.screenshot.save("test_2.png")
     assert_equal "Sign Out", @browser.li(:id => "shopper-status").text
   end
 end
