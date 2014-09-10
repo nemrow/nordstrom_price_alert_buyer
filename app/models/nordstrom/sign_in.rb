@@ -9,7 +9,7 @@ module Nordstrom
       go_to_signin_page
       fill_in_data
       submit_button.click
-      until @browser.li(:id => "shopper-status").exists? do sleep 1 end
+      until @browser.a(:text => "Sign Out").exists? do sleep 1 end
     end
 
     private
