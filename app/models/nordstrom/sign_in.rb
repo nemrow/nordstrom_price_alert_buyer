@@ -9,7 +9,12 @@ module Nordstrom
       go_to_signin_page
       fill_in_data
       submit_button.click
-      until browser.a(:text => "Sign Out").exists? do sleep 1 end
+      count = 0
+      until browser.a(:text => "Sign Out").exists? do
+        sleep 1
+        raise "Cant find signout button" if count > 10
+        count += 1
+      end
       browser
     end
 
@@ -20,8 +25,12 @@ module Nordstrom
       end
 
       def fill_in_data
-        email_input.set(@user.nordstrom_email)
-        password_input.set(@user.nordstrom_password)
+        email_input.set(credentials.username)
+        password_input.set(credentials.password)
+      end
+
+      def credentials
+        @credentials ||= VendorCredential.find_by_user_id_and_vendor_id(@user.id, @vendor.id)
       end
 
       def email_input
@@ -37,7 +46,7 @@ module Nordstrom
       end
 
       def browser
-        browser ||= begin
+        @browser ||= begin
           browser = Watir::Browser.new(:phantomjs)
           browser.goto(@vendor.host)
           browser
