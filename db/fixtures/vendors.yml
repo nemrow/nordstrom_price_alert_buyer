@@ -1,0 +1,4 @@
+---
+- :display_name: Nordstrom
+  :class_name: Nordstrom
+  :host: http://shop.nordstrom.com
