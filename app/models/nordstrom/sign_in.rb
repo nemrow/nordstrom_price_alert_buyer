@@ -1,20 +1,21 @@
 module Nordstrom
   class SignIn
-    def initialize(user, browser)
+    def initialize(user, vendor)
       @user = user
-      @browser = browser
+      @vendor = vendor
     end
 
     def run
       go_to_signin_page
       fill_in_data
       submit_button.click
-      until @browser.a(:text => "Sign Out").exists? do sleep 1 end
+      until browser.a(:text => "Sign Out").exists? do sleep 1 end
+      browser
     end
 
     private
       def go_to_signin_page
-        signin_link = @browser.link(:text => "Sign In")
+        signin_link = browser.link(:text => "Sign In")
         signin_link.click
       end
 
@@ -24,15 +25,23 @@ module Nordstrom
       end
 
       def email_input
-        @browser.text_field(:id => "ctl00_mainContentPlaceHolder_signIn_email")
+        browser.text_field(:id => "ctl00_mainContentPlaceHolder_signIn_email")
       end
 
       def submit_button
-        @browser.link(:id => "ctl00_mainContentPlaceHolder_signIn_enterButton")
+        browser.link(:id => "ctl00_mainContentPlaceHolder_signIn_enterButton")
       end
 
       def password_input
-        @browser.text_field(:id => "ctl00_mainContentPlaceHolder_signIn_password")
+        browser.text_field(:id => "ctl00_mainContentPlaceHolder_signIn_password")
+      end
+
+      def browser
+        browser ||= begin
+          browser = Watir::Browser.new(:phantomjs)
+          browser.goto(@vendor.host)
+          browser
+        end
       end
   end
 end

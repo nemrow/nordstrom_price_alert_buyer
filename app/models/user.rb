@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :nordstrom, :nordstrom_cc_cvc, :nordstrom_email, :nordstrom_password, :password
+  attr_accessible :email, :name, :password
 
   has_secure_password
+
+  has_many :user_vendors
 end

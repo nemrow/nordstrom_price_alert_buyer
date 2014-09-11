@@ -3,8 +3,9 @@ class Nordstrom::Cart
   SHOPPING_CART_URL = "https://secure.nordstrom.com/shoppingbag.aspx?origin=tab"
   REMOVAL_BUTTON_IMAGE_URL = "https://secure.nordstromimage.com/images/Secure42/Remove_Button.gif"
 
-  def initialize(user, browser)
+  def initialize(user, vendor, browser)
     @user = user
+    @vendor = vendor
     @browser = browser
   end
 

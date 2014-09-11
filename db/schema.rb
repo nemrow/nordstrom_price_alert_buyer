@@ -11,17 +11,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140910174628) do
+ActiveRecord::Schema.define(:version => 20140911160819) do
 
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "password_digest"
     t.string   "email"
-    t.string   "nordstrom_email"
-    t.string   "nordstrom_password"
-    t.integer  "nordstrom_cc_cvc"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "vendor_credentials", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "vendor_id"
+    t.string   "username"
+    t.string   "password_digest"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "vendors", :force => true do |t|
+    t.string   "host"
+    t.string   "display_name"
+    t.string   "class_name"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
 end
