@@ -12,6 +12,7 @@ gem 'bcrypt-ruby'
 group :development, :test do
   gem 'rspec-rails'
   gem 'byebug'
+  gem "factory_girl_rails"
 end
 
 
