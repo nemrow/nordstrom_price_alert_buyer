@@ -13,4 +13,8 @@ class Watir::Browser
       count += 1
     end
   end
+
+  def mome
+    self.screenshot.save("spec/screenshots/test_#{Time.now.to_i}")
+  end
 end
