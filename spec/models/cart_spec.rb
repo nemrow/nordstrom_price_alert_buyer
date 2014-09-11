@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Nordstrom::SignIn do
-
+describe Cart do
   before(:each) do
     @user = User.create(
       :name => "Jordan Nemrow",
@@ -16,12 +15,14 @@ describe Nordstrom::SignIn do
     @vendor_credential.user = @user
     @vendor_credential.vendor = @vendor
     @vendor_credential.save
+
+    @browser = SignIn.new(@user, @vendor).get_browser
   end
 
-  context "when a user and vendor is provided" do
-    it "logs the user in and returns the browser object" do
-      Nordstrom::SignIn.new(@user, @vendor).run
-      assert_equal "Sign Out", @browser.li(:id => "shopper-status").text
+  context "when a user, vendor and browser are provided" do
+    it "return the proper vendor class cart" do
+      klass = Cart.new(@user, @browser, @vendor).get_cart
+      assert_equal Nordstrom::Cart, klass
     end
   end
 end

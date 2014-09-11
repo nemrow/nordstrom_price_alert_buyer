@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Nordstrom::SignIn do
-
+describe SignIn do
   before(:each) do
     @user = User.create(
       :name => "Jordan Nemrow",
@@ -19,9 +18,9 @@ describe Nordstrom::SignIn do
   end
 
   context "when a user and vendor is provided" do
-    it "logs the user in and returns the browser object" do
-      Nordstrom::SignIn.new(@user, @vendor).run
-      assert_equal "Sign Out", @browser.li(:id => "shopper-status").text
+    it "return the proper vendor class for signing in" do
+      klass = SignIn.new(@user, @vendor).get_browser
+      assert_equal Nordstrom::SignIn, klass
     end
   end
 end

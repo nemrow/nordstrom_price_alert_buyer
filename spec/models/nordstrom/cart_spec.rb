@@ -10,8 +10,7 @@ describe Nordstrom::Cart do
       :nordstrom_password => ENV["JORDAN_NORDSTROM_PASSWORD"],
       :nordstrom_cc_cvc => ENV["JORDAN_NORDSTROM_CC_CVC_CODE"]
     )
-    @browser = Nordstrom.browser
-    Nordstrom::SignIn.new(@user, @browser).run
+    @browser = SignIn.new(@user, @browser).get_browser
   end
 
   describe "being able to add products to the cart for a user already signed in" do
