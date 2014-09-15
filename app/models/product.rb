@@ -1,4 +1,4 @@
-class Cart
+class Product
   def initialize(user, vendor, browser)
     @user = user
     @vendor = vendor
@@ -7,6 +7,6 @@ class Cart
 
   def get_cart
     vendor_class = Kernel.const_get(@vendor.class_name)
-    vendor_class::Cart.new(@user, @vendor, @browser)
+    vendor_class::Product.new(@user, @vendor, @browser)
   end
 end
