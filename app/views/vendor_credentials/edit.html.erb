@@ -1,0 +1,11 @@
+<h1>Edit Vendor Credential</h1>
+<h2><%= @vendor_credential.vendor.display_name %></h2>
+
+<%= form_for :vendor_credential, :url => vendor_credential_path(@vendor_credential), :method => :put do |f| %>
+  <%= f.hidden_field "vendor_id", :value => @vendor_credential[:vendor_id] %>
+  <label>Login Username for Vendor: </label>
+  <%= f.text_field "username" %><br>
+  <label>Login Password for Vendor: </label>
+  <%= f.password_field "password" %><br>
+  <%= f.submit "Add Vendor Credentials" %>
+<% end %>

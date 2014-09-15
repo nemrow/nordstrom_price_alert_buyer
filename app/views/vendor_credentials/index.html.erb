@@ -1,0 +1,9 @@
+<h1>Vendor Credentials for <%= @user.email %> (<%= @vendor_credentials.count %>)</h1>
+
+<%= link_to "New Vendor!", new_vendor_credential_path %>
+
+<br><br>
+
+<% @vendor_credentials.each do |vc| %>
+  <%= link_to vc.vendor.display_name, edit_vendor_credential_path(vc) %>
+<% end %>

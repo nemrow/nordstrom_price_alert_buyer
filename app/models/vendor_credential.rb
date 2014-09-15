@@ -4,11 +4,21 @@ class VendorCredential < ActiveRecord::Base
   belongs_to :user
   belongs_to :vendor
 
+  validates :vendor_id, :uniqueness => {:scope => :user_id}
+
   def password=(password)
     self.password_digest = AESCrypt.encrypt(password, ENV["AESCRYPT_PASSWORD"])
   end
 
   def password
     AESCrypt.decrypt(self.password_digest, ENV["AESCRYPT_PASSWORD"])
+  end
+
+  def self.authenticate_credentials(user, credentials)
+    vendor = Vendor.find(credentials[:vendor_id])
+    browser = Browser.new(vendor)
+    sign_in_class = browser.sign_in(user, {:credentials => OpenStruct.new(credentials)})
+    sign_in_class.run
+    sign_in_class
   end
 end
