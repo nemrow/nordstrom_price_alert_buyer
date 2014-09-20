@@ -7,6 +7,7 @@ gem 'rails', '3.2.18'
 
 gem 'pg'
 gem 'watir-webdriver'
+gem "nokogiri"
 gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'aescrypt'
 

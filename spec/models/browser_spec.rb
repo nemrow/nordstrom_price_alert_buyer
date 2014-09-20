@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe SignIn do
+describe Browser do
   before(:each) do
-    @user = User.new(
+    @user = User.create(
       :name => "Jordan Nemrow",
-      :email => ENV["JORDAN_NORDSTROM_EMAIL"]
+      :email => ENV["JORDAN_NORDSTROM_EMAIL"],
+      :password => "password"
     )
-    @user.password = "password"
     vendor_credential = VendorCredential.create(
       :username => ENV["JORDAN_NORDSTROM_EMAIL"],
       :password => ENV["JORDAN_NORDSTROM_PASSWORD"]
@@ -17,10 +17,11 @@ describe SignIn do
     vendor_credential.save
   end
 
-  context "when a user and vendor is provided" do
-    it "return the proper vendor class for signing in" do
-      browser = SignIn.new(@user, @vendor).get_browser
-      browser.span(:id => 'shopperGreeting').text.should match(/Jordan/)
+  context "when correct credentials are given" do
+    it "should return a browser with the user logged in" do
+      browser = Browser.new(@vendor, :user => @user)
+      browser.account.sign_in
+      browser.account.signed_in?.should be(true)
     end
   end
 end

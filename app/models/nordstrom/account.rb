@@ -1,15 +1,16 @@
 module Nordstrom
-  class SignIn
+  class Account
     attr_accessor :browser
 
-    def initialize(vendor, browser, user, options={})
+    def initialize(vendor, browser, options={})
+      raise "No User Initialized In Options" if !options[:user]
+      @user = options[:user]
       @vendor = vendor
       @browser = browser
-      @user = user
       @options = options
     end
 
-    def run
+    def sign_in
       go_to_signin_page
       fill_in_data
       submit_button.click
@@ -34,12 +35,14 @@ module Nordstrom
       end
 
       def login_success_detected?
-        @browser.html.match(/Hello, /i)
+        @browser.html.match(/Hello, /i) ? true : false
       end
 
       def login_fail_detected?
-        @browser.html.match(/The e-mail address and\/or password could not be found/i) ||
-        @browser.html.match(/send you an e-mail with a link to reset your password/i)
+        (
+          @browser.html.match(/The e-mail address and\/or password could not be found/i) ||
+          @browser.html.match(/send you an e-mail with a link to reset your password/i)
+        ) ? true : false
       end
 
       def go_to_signin_page

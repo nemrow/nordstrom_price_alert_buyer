@@ -10,15 +10,15 @@ class Nordstrom::Product
 
   def add_to_cart(product_url, options={})
     go_to_product_page(product_url)
-    specify_product_options(options)
+    Nordstrom::Options.new(options).apply_options(@browser)
     add_current_product_to_cart
     handle_backorder_confirmation
   end
 
   def price_check(product_url, options={})
     go_to_product_page(product_url)
-    specify_product_options(options)
-    read_price
+    Nordstrom::Options.new(options).apply_options(@browser)
+    pricing_class.current_price(options)
   end
 
   def remove_all_items_from_cart
@@ -27,26 +27,18 @@ class Nordstrom::Product
     until @browser.shopping_bag_count == 0 do sleep 1 end
   end
 
+  def pricing_class
+    @pricing_class ||= Nordstrom::Pricing.new(@browser)
+  end
+
   private
     def go_to_product_page(product_url)
       @browser.goto product_url
-    end
-
-    def read_price
-      byebug
-      p ""
-    end
-
-    def specify_product_options(options)
-      @browser.wait_for_page_load
-      options.each do |option, value|
-        if option == :size
-          size_button = @browser.buttons(:class => "option-label").find {|b| b.value.match(/#{value}/i)}
-          raise "Cannot find options button for #{option} - #{value}" if size_button.nil?
-          size_button.fire_event('onclick')
-        elsif option == :color
-          @browser.select_list(:id => "color-selector").select(value)
-        end
+      count = 0
+      until @browser.section(:id => "customizations").exists?
+        raise "can't loat product page" if count > 10
+        sleep(1)
+        count += 1
       end
     end
 

@@ -12,8 +12,9 @@ class Browser
     end
   end
 
-  def sign_in(user, options={})
-    vendor_class::SignIn.new(@vendor, browser, user, options)
+  def account(options={})
+    raise "No User Initialized In Options" if !@options[:user]
+    @account ||= vendor_class::Account.new(@vendor, browser, @options)
   end
 
   def product
