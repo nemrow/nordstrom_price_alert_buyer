@@ -18,7 +18,7 @@ class VendorCredentialsController < ApplicationController
   def update
     vc = VendorCredential.find(params[:id])
     browser = VendorCredential.authenticate_credentials(@user, params[:vendor_credential])
-    if browser.signed_in?
+    if browser.account.signed_in?
       vc.update_attributes(params[:vendor_credential])
       redirect_to :action => "index", :success => "vendor updated!"
     else
@@ -28,7 +28,7 @@ class VendorCredentialsController < ApplicationController
 
   def create
     browser = VendorCredential.authenticate_credentials(@user, params[:vendor_credential])
-    if browser.signed_in?
+    if browser.account.signed_in?
       vc = VendorCredential.create(params[:vendor_credential])
       @user.vendor_credentials << vc
       redirect_to :action => "index", :success => "vendor added!"

@@ -16,9 +16,8 @@ class VendorCredential < ActiveRecord::Base
 
   def self.authenticate_credentials(user, credentials)
     vendor = Vendor.find(credentials[:vendor_id])
-    browser = Browser.new(vendor)
-    sign_in_class = browser.sign_in(user, {:credentials => OpenStruct.new(credentials)})
-    sign_in_class.run
-    sign_in_class
+    browser = Browser.new(vendor, user, {:credentials => OpenStruct.new(credentials)})
+    browser.account.sign_in
+    browser
   end
 end

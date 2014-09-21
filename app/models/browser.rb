@@ -14,7 +14,7 @@ class Browser
   end
 
   def account
-    @account ||= vendor_class::Account.new(@vendor, browser, @user)
+    @account ||= vendor_class::Account.new(@vendor, browser, @user, @options)
   end
 
   def product
