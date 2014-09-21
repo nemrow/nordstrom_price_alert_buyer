@@ -23,7 +23,9 @@ module Nordstrom
       end
 
       def handle_color(browser, product_spec)
-        browser.select_list(:id => "color-selector").select(product_spec.value)
+        colors = browser.select_list(:id => "color-selector").options
+        color_match = colors.find{|c|c.text.match(/#{product_spec.value}/i)}
+        browser.select_list(:id => "color-selector").select(color_match.text)
       end
 
       def handle_department(browser, product_spec)

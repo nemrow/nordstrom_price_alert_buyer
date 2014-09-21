@@ -13,6 +13,7 @@ class Nordstrom::Product
     Nordstrom::ProductSpecSelector.new(product_specs).apply_product_specs(@browser)
     add_current_product_to_cart
     handle_backorder_confirmation
+    @browser.mome
   end
 
   def price_check(product_url, product_specs=[])

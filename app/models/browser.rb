@@ -1,5 +1,5 @@
 class Browser
-  def initialize(vendor, user, options={})
+  def initialize(vendor, user=nil, options={})
     @vendor = vendor
     @user = user
     @options = options
@@ -14,6 +14,7 @@ class Browser
   end
 
   def account
+    raise "Must initialize with a user" if !@user
     @account ||= vendor_class::Account.new(@vendor, browser, @user, @options)
   end
 
