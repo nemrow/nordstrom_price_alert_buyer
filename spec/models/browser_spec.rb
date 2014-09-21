@@ -19,7 +19,7 @@ describe Browser do
 
   context "when correct credentials are given" do
     it "should return a browser with the user logged in" do
-      browser = Browser.new(@vendor, :user => @user)
+      browser = Browser.new(@vendor, @user)
       browser.account.sign_in
       browser.account.signed_in?.should be(true)
     end

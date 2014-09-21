@@ -2,12 +2,11 @@ module Nordstrom
   class Account
     attr_accessor :browser
 
-    def initialize(vendor, browser, product_specs=[])
-      raise "No User Initialized In ProductSpecs" if !product_specs[:user]
-      @user = product_specs[:user]
+    def initialize(vendor, browser, user, options={})
+      @user = user
       @vendor = vendor
       @browser = browser
-      @product_specs = product_specs
+      @options = options
     end
 
     def sign_in
@@ -56,7 +55,7 @@ module Nordstrom
       end
 
       def credentials
-        @credentials ||= @product_specs[:credentials] || VendorCredential.find_by_user_id_and_vendor_id(@user.id, @vendor.id)
+        @credentials ||= @options[:credentials] || VendorCredential.find_by_user_id_and_vendor_id(@user.id, @vendor.id)
       end
 
       def email_input
