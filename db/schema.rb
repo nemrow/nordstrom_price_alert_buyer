@@ -11,7 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140911160819) do
+ActiveRecord::Schema.define(:version => 20140920192513) do
+
+  create_table "product_specs", :force => true do |t|
+    t.string   "product_spec_type"
+    t.string   "value"
+    t.integer  "saved_item_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "saved_items", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "vendor_id"
+    t.decimal  "price",                :precision => 8, :scale => 2
+    t.text     "product_url"
+    t.string   "product_url_checksum"
+    t.boolean  "active",                                             :default => true
+    t.date     "end_date"
+    t.date     "purchase_date"
+    t.datetime "created_at",                                                           :null => false
+    t.datetime "updated_at",                                                           :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

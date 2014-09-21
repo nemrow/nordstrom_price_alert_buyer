@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
 
   has_many :vendor_credentials
+  has_many :saved_items
 end

@@ -4,13 +4,13 @@ module Nordstrom
       @browser = browser
     end
 
-    def current_price(options={})
-      sale_price(options) || regular_price(options)
+    def current_price(product_specs=[])
+      sale_price(product_specs) || regular_price(product_specs)
     end
 
-    def sale_price(options={})
+    def sale_price(product_specs=[])
       @sale_price ||= begin
-        price_spans = selected_pricing_row(options).css('td.item-price span')
+        price_spans = selected_pricing_row(product_specs).css('td.item-price span')
         if price_spans.count > 1
           price_extractor (price_spans.css('[class=sale-price]').text)
         elsif price_spans.count == 1
@@ -19,9 +19,9 @@ module Nordstrom
       end
     end
 
-    def regular_price(options={})
+    def regular_price(product_specs=[])
       @regular_price ||= begin
-        price_spans = selected_pricing_row(options).css('td.item-price span')
+        price_spans = selected_pricing_row(product_specs).css('td.item-price span')
         if price_spans.count > 1
           price_extractor (price_spans.css('[class=regular-price]').text)
         elsif price_spans.count == 1
@@ -45,11 +45,12 @@ module Nordstrom
         pricing_node.css('tr.item-price-rows')
       end
 
-      def selected_pricing_row(options)
+      def selected_pricing_row(product_specs)
         return pricing_rows[0] if pricing_rows.count == 1
-        raise "No department type given where department type is mandatory" if !options[:department]
+        department = product_specs.find{|ps| ps.product_spec_type == "department"}
+        raise "No department type given where department type is mandatory" if !department
         pricing_rows.find do |price_row|
-          price_row.css('input[name=price-filter]')[0]["value"] =~ /#{options[:department]}/i
+          price_row.css('input[name=price-filter]')[0]["value"] =~ /#{department.value}/i
         end
       end
   end

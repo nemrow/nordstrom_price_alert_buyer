@@ -1,0 +1,22 @@
+---
+- :price: 250
+  :product_url: http://shop.nordstrom.com/s/tadashi-shoji-textured-lace-mermaid-gown/3452181
+  :product_specs:
+  - :department: regular
+    :size: 4
+    :color: Carmine
+- :price: 120
+  :product_url: http://shop.nordstrom.com/s/felicity-coco-midi-sheath-dress-nordstrom-exclusive/3590189
+  :product_specs:
+  - :color: black
+    :size: small
+- :price: 100
+  :product_url: http://shop.nordstrom.com/s/vince-camuto-baily-hobo-nordstrom-exclusive/3739490
+  :product_specs:
+  - :color: mocha
+- :price: 100
+  :product_url: http://shop.nordstrom.com/s/adrianna-papell-boatneck-lace-sheath-dress-regular-petite/3306604
+  :product_specs:
+  - :color: navy
+    :size: 6P
+    :department: petite

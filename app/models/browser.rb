@@ -1,20 +1,20 @@
 class Browser
-  def initialize(vendor, options={})
+  def initialize(vendor, specs={})
     @vendor = vendor
-    @options = options
+    @specs = specs
   end
 
   def browser
     @browser ||= begin
       browser = Watir::Browser.new(:phantomjs)
-      browser.goto(@vendor.host) unless @options[:skip_homepage]
+      browser.goto(@vendor.host) unless @specs[:skip_homepage]
       browser
     end
   end
 
-  def account(options={})
-    raise "No User Initialized In Options" if !@options[:user]
-    @account ||= vendor_class::Account.new(@vendor, browser, @options)
+  def account(specs={})
+    raise "No User Initialized In ProductSpecs" if !@specs[:user]
+    @account ||= vendor_class::Account.new(@vendor, browser, @specs)
   end
 
   def product

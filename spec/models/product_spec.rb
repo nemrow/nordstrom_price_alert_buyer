@@ -22,27 +22,38 @@ describe Product do
   end
 
   context "For scraping prices without user credentials" do
-    context "given a non sale price with multipe department options" do
+    context "given a non sale price with multipe department product_specs" do
       it "should return the price of the product" do
         browser = Browser.new(@vendor, :skip_homepage => true)
-        product_options = {:size => "4", :color => "Carmine", :department => "regular"}
-        assert_equal 298.00, browser.product.price_check(PRODUCT_PAGE_URL, product_options)
+        product_specs = [
+          ProductSpec.create(:product_spec_type => "size", :value => "4"),
+          ProductSpec.create(:product_spec_type => "color", :value => "Carmine"),
+          ProductSpec.create(:product_spec_type => "department", :value => "regular")
+        ]
+        assert_equal 298.00, browser.product.price_check(PRODUCT_PAGE_URL, product_specs)
       end
     end
 
-    context "given a sale price with one no department options" do
+    context "given a sale price with one no department product_specs" do
       it "should return the price of the product" do
         browser = Browser.new(@vendor, :skip_homepage => true)
-        product_options = {:size => "Small", :color => "Navy Floral"}
-        assert_equal 22.98, browser.product.price_check(PRODUCT_SALE_PAGE_URL, product_options)
+        product_specs = [
+          ProductSpec.create(:product_spec_type => "size", :value => "small"),
+          ProductSpec.create(:product_spec_type => "color", :value => "Navy Floral")
+        ]
+        assert_equal 22.98, browser.product.price_check(PRODUCT_SALE_PAGE_URL, product_specs)
       end
     end
 
-    context "given a sale price with multi department options" do
+    context "given a sale price with multi department product_specs" do
       it "should return the price of the product" do
         browser = Browser.new(@vendor, :skip_homepage => true)
-        product_options = {:size => "Small", :color => "Lipstick", :department => "Petite"}
-        assert_equal 46.80, browser.product.price_check(PRODUCT_MULTI_DEPT_SALE_URL, product_options)
+        product_specs = [
+          ProductSpec.create(:product_spec_type => "size", :value => "small"),
+          ProductSpec.create(:product_spec_type => "color", :value => "Lipstick"),
+          ProductSpec.create(:product_spec_type => "department", :value => "Petite")
+        ]
+        assert_equal 46.80, browser.product.price_check(PRODUCT_MULTI_DEPT_SALE_URL, product_specs)
       end
     end
   end

@@ -32,7 +32,7 @@ link:files/vendor/rails/actionpack/README.html.
        <tt>rails new myapp</tt> (where <tt>myapp</tt> is the application name)
 
 2. Change directory to <tt>myapp</tt> and start the web server:
-       <tt>cd myapp; rails server</tt> (run with --help for options)
+       <tt>cd myapp; rails server</tt> (run with --help for product_specs)
 
 3. Go to http://localhost:3000/ and you'll see:
        "Welcome aboard: You're riding Ruby on Rails!"

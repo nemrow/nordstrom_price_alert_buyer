@@ -8,17 +8,17 @@ class Nordstrom::Product
     @browser = browser
   end
 
-  def add_to_cart(product_url, options={})
+  def add_to_cart(product_url, product_specs=[])
     go_to_product_page(product_url)
-    Nordstrom::Options.new(options).apply_options(@browser)
+    Nordstrom::ProductSpecSelector.new(product_specs).apply_product_specs(@browser)
     add_current_product_to_cart
     handle_backorder_confirmation
   end
 
-  def price_check(product_url, options={})
+  def price_check(product_url, product_specs=[])
     go_to_product_page(product_url)
-    Nordstrom::Options.new(options).apply_options(@browser)
-    pricing_class.current_price(options)
+    Nordstrom::ProductSpecSelector.new(product_specs).apply_product_specs(@browser)
+    pricing_class.current_price(product_specs)
   end
 
   def remove_all_items_from_cart
